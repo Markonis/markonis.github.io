@@ -70,6 +70,6 @@ Reaction of the user:
 - You get to sell the product **today**.
 - The users are getting what they actually **need**.
 - The engineering team can work on new and exciting features sooner.
-- The product is not getting bloated with complex code, and will be easier to maintain in the future. This is important because all the complexity you add today will slow down future development.
+- The product is not getting bloated with complex code, and will be easier to maintain in the future. This is important because all the complexity you add today will slow down development tomorrow.
 
 <center><img src="/images/seal-of-approval.jpg" style="height: 300px;"></center>
