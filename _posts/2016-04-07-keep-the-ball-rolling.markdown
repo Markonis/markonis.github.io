@@ -15,7 +15,7 @@ The business people, developers and advisors all come together to brainstorm the
 
 ## How Companies Actually Work
 
-The dream of building a perfectly rounded product that will keep rolling the company forward is just that - a dream! The reality is that a product is like a child, you have to hold it's hand for a year or two until it starts walking with confidence.
+The dream of building a perfectly rounded product that will keep rolling the company forward is just that - a dream! The reality is that a product is like a child, you have to hold its hand for a year or two until it starts walking with confidence.
 
 **Good entrepreneurs** understand that the product will have to change often in order to fit customer's needs.
 
