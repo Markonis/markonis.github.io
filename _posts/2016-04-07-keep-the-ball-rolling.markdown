@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Keep The Ball Rolling"
-date:   2016-04-07 20:11:32 0500
+date:   2016-04-07 20:11:32 0100
 categories: lean feature development
 ---
 
