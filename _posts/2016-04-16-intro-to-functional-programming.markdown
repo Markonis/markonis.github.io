@@ -2,7 +2,7 @@
 layout: post
 title:  "Intro To Functional Programming"
 date:   2016-04-16 10:30:24 0100
-categories: elixir tips
+categories: functional programming
 ---
 
 > What is functional programming, and why does it matter?
