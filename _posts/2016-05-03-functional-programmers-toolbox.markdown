@@ -65,7 +65,7 @@ The `map` function takes two arguments:
 - A list of things
 - A function that takes **one argument**
 
-What it does is that it goes through all the elements of the list, applies the given function to each element, saves the result, and then builds a new list from those results.
+What it does is that it goes through all the elements of the list, applies the given function to each element, saves the result, and then **returns a new list** from those results.
 
 #### For Example:
 
@@ -95,13 +95,13 @@ The `filter` function takes two arguments:
 - A list of things
 - A function that takes **one argument** and returns `true` or `false`
 
-What it does is that it takes each element of the list, applies the function to that element and checks the result. Then it builds a new list from those elements for which the function returned `true`.
+What it does is that it takes each element of the list, applies the function to that element and checks the result. Then it **returns a new list** from those elements for which the function returned `true`.
 
 #### For Example:
 
 If we take the list from the previous example:
 
-    list = [1, 2, 3, 4, 5]
+    list = [5, 3, 2, 4, 1]
 
 And we define a `test` function like this:
 
@@ -113,7 +113,7 @@ When we apply the filter function like so:
 
 We get:
 
-    [1, 2]
+    [2, 1]
 
 The `filter` function can be incredibly useful in situations like this:
 
@@ -178,7 +178,7 @@ Take is a very simple function. It takes two arguments:
 - A list of things
 - An integer number, for example `n`
 
-It returns a new list, that contains only the **first** `n` elements of the original list.
+It **returns a new list**, that contains only the **first** `n` elements of the original list.
 
 #### For Example
 
@@ -198,14 +198,14 @@ The `take` function is very cool, because in contrast to other higher order func
 
 ## Take While
 
-This is a variation on the `take` function, with an interesting twist. It takes two arguments:
+This is a variation on the `take` function, with an interesting twist. It takes **two arguments**:
 
 - A list of things
 - A function that takes **one** argument and returns `true` or `false`
 
 It simply starts at the first element of the list, and applies the function to that element.
 
-As long as the result is `true`, the elements are added to the resulting list. The **first time** the function returns `false` for a given element, the processing is stopped.
+**As long as the result is** `true`, the elements are added to the resulting list. The **first time** the function returns `false` for a given element, the processing is stopped.
 
 #### For Example
 
@@ -229,10 +229,10 @@ The `take_while` function is very useful when we are dealing with sorted lists, 
 
 ## The Benefits
 
-- The [separation of concerns](https://en.wikipedia.org/wiki/Separation_of_concerns){:target="_blank"} is achieved, because your business logic **does not need to know** for example how the sorting algorithm is implemented.
+- The **[separation of concerns](https://en.wikipedia.org/wiki/Separation_of_concerns){:target="_blank"}** is achieved, because, your business logic **does not need to know** any details of how the higher order function is implemented.
 
-- Once a higher order function is written and tested, it can be reused many times, without any changes, because it is by nature generic.
+- Once a higher order function is written and tested, it **can be reused many times**, without any changes, because it is by nature **generic**.
 
-- The higher order functions we discussed are implemented in the standard library of most programming languages, and the principles of how they work are always the same.
+- The higher order functions we discussed are **implemented in the standard library** of most programming languages, and the principles of how they work are always the same.
 
 <center><img src="/images/good-job.jpg" style="height: 300px;"></center>
