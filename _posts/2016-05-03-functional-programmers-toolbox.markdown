@@ -8,12 +8,12 @@ Hey guys, in the [previous blog post]({% post_url 2016-04-16-intro-to-functional
 
 There is only a small number of basic higher order functions, from which all others can be easily created. Some of the most important are those that operate on lists of elements:
 
-- sort
-- map
-- filter
-- reduce
-- take
-- take while
+- [sort](#sort)
+- [map](#map)
+- [filter](#filter)
+- [reduce](#reduce)
+- [take](#take)
+- [take while](#take-while)
 
 Let's go through them one by one and see why they are so incredibly useful.
 
