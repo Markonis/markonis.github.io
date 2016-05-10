@@ -1,0 +1,18 @@
+.tabs {
+  ul {
+    @extend %clearfix;
+
+    list-style: none;
+    li {
+      @extend %monospace;
+      padding: 5px 10px;
+      float: left;
+      cursor: pointer;
+      background: #e8e8e8;
+    }
+    li:hover {
+      background: #e2e2e2;
+    }
+    margin: 0;
+  }
+}
