@@ -37,25 +37,49 @@ You don't care, because the only thing you have to provide is the comparator fun
 
 Given a list of people like this:
 
-    list = [
-      {name: "Bob", age: 25},
-      {name: "Alice", age: 27}
-    ]
+{% capture ruby %}
+list = [
+  {name: "Bob", age: 25},
+  {name: "Alice", age: 27}
+]
+{% endcapture %}
+{% capture javascript %}
+var list = [
+  {name: "Bob", age: 25},
+  {name: "Alice", age: 27}
+];
+{% endcapture %}
+{% include code.html %}
 
-And a comparator function:
+We can sort it like this:
 
-    cmp_name(p1, p2) = p1.name <=> p2.name
-
-You can easily sort the people by name:
-
-    sort(list, cmp_name)
+{% capture ruby %}
+list.sort do |p1, p2|
+  p1.name <=> p2.name
+end
+{% endcapture %}
+{% capture javascript %}
+list.sort(function(p1, p2){
+  return p1.name.localeCompare(p2.name);
+});
+{% endcapture %}
+{% include code.html %}
 
 And you get:
 
-    [
-      {name: "Alice", age: 27},
-      {name: "Bob", age: 25}
-    ]
+{% capture ruby %}
+[
+  {name: "Alice", age: 27},
+  {name: "Bob", age: 25}
+]
+{% endcapture %}
+{% capture javascript %}
+[
+  {name: "Alice", age: 27},
+  {name: "Bob", age: 25}
+]
+{% endcapture %}
+{% include code.html %}
 
 ## Map
 
@@ -70,16 +94,31 @@ What it does is that it goes through all the elements of the list, applies the g
 
 If we have a list of numbers and a function like this:
 
-    list = [1, 2, 3, 4, 5]
-    square(x) = x * x
+{% capture ruby %}
+list = [1, 2, 3, 4, 5]
+{% endcapture %}
+{% capture javascript %}
+var list = [1, 2, 3, 4, 5]
+{% endcapture %}
+{% include code.html %}
 
-We can apply the map function like so:
-
-    map(list, square)
+We can get a list of **squares** of the numbers in the list:
+{% capture ruby %}
+list.map do |num|
+  num * num
+end
+{% endcapture %}
+{% capture javascript %}
+list.map(function(num){
+  return num * num;
+});
+{% endcapture %}
+{% include code.html %}
 
 And we get:
-
-    [1, 4, 9, 16, 25]
+{% highlight ruby %}
+[1, 4, 9, 16, 25]
+{% endhighlight %}
 
 The `map` function is very useful, when we want to perform **the same kind of processing** on all the elements of a list. For example:
 
@@ -100,19 +139,33 @@ What it does is that it takes each element of the list, applies the function to 
 
 If we take the list from the previous example:
 
-    list = [5, 3, 2, 4, 1]
-
-And we define a `test` function like this:
-
-    test(x) = x < 3
+{% capture ruby %}
+list = [5, 2, 3, 4, 1]
+{% endcapture %}
+{% capture javascript %}
+var list = [5, 2, 3, 4, 1]
+{% endcapture %}
+{% include code.html %}
 
 When we apply the filter function like so:
 
-    filter(list, test)
+{% capture ruby %}
+# In Ruby filter is called select
+list.select do |num|
+  num < 3
+end
+{% endcapture %}
+{% capture javascript %}
+list.filter(function (num) {
+  return num < 3;
+});
+{% endcapture %}
+{% include code.html %}
 
 We get:
-
-    [2, 1]
+{% highlight ruby %}
+[2, 1]
+{% endhighlight %}
 
 The `filter` function can be incredibly useful in situations like this:
 
@@ -137,7 +190,6 @@ The arguments for the function you pass to `reduce` are:
 
 - Accumulator
 - Current element of the list
-
 
 The `reduce` function takes the **first** element of the list, for example `a`, and calls the given function like this:
 
@@ -172,7 +224,7 @@ Then the initial call to `reduce` will return `6`.
 
 ## Take While
 
-This is a variation on the `take` function, with an interesting twist. It takes **two arguments**:
+The `take while` function takes **two arguments**:
 
 - A list of things
 - A function that takes **one** argument and returns `true` or `false`
@@ -183,23 +235,39 @@ It simply starts at the first element of the list, and applies the function to t
 
 #### For Example
 
-Given a list like before:
+Given a list of numbers:
 
-    list = [4, 3, 2, 1, 5]
-
-And a function like so:
-
-    test(x) = 5 * x > 13
+{% capture ruby %}
+list = [5, 3, 2, 4, 1]
+{% endcapture %}
+{% capture javascript %}
+var list = [5, 3, 2, 4, 1]
+{% endcapture %}
+{% include code.html %}
 
 When we apply the `take_while` function to this list:
 
-    take_while(list, test)
+{% capture ruby %}
+list.take_while do |num|
+  num * 5 > 13
+end
+{% endcapture %}
+{% capture javascript %}
+// In JavaScript there is no built-in takeWhile function,
+// but we can use one from the underscore.js library
+_.takeWhile(list, function(num) {
+  return 5 * num > 13;
+});
+{% endcapture %}
+{% include code.html %}
 
-The result is:
+And we get:
 
-    [4, 3]
+{% highlight ruby %}
+[5, 3]
+{% endhighlight %}
 
-The `take_while` function is very useful when we are dealing with sorted lists, and we want to get only the elements that meet certain criteria. In this scenario, the `take_while` function will provide better performance than the `filter` function.
+The `take while` function is very useful when we are dealing with sorted lists, and we want to get only the elements that meet certain criteria. In this scenario, the `take_while` function will provide better performance than the `filter` function.
 
 ## The Benefits
 
