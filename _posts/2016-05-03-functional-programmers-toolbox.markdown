@@ -12,7 +12,6 @@ There is only a small number of basic higher order functions, from which all oth
 - [map](#map)
 - [filter](#filter)
 - [reduce](#reduce)
-- [take](#take)
 - [take while](#take-while)
 
 Let's go through them one by one and see why they are so incredibly useful.
@@ -170,31 +169,6 @@ The calls to the `fn` will look like this:
 4. `fn(list, fn, 6)`
 
 Then the initial call to `reduce` will return `6`.
-
-## Take
-
-Take is a very simple function. It takes two arguments:
-
-- A list of things
-- An integer number, for example `n`
-
-It **returns a new list**, that contains only the **first** `n` elements of the original list.
-
-#### For Example
-
-Let's apply the `take` function to the same list we had before:
-
-    take([1, 2, 3, 4, 5], 3)
-
-We will get:
-
-    [1, 2, 3]
-
-The `take` function is very cool, because in contrast to other higher order functions, it has a **built in counter**. This can be useful for things where we need a specific number of items, for example:
-
-- Pagination
-- Processing in pairs / tripplets
-- Buffering
 
 ## Take While
 
