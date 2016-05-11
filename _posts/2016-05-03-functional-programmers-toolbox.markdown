@@ -192,7 +192,7 @@ Here is what we do:
 
 Here is a diagram of the whole process:
 
-<center><img src="/images/reduce.png"></center>
+<center><img src="/images/reduce.png" style="max-height: 410px;"></center>
 
 ## Take While
 
