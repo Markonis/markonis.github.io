@@ -3,6 +3,7 @@
     @extend %clearfix;
 
     list-style: none;
+
     li {
       @extend %monospace;
       padding: 5px 10px;
@@ -10,9 +11,22 @@
       cursor: pointer;
       background: #e8e8e8;
     }
+
     li:hover {
       background: #e2e2e2;
     }
+
+    li.active {
+      background: #6478ff;
+      color: white;
+    }
+
+    li.active.ruby { background: #d9365c }
+    li.active.javascript { background: #ffb70f }
+
     margin: 0;
   }
+
+  .tab { display: none }
+  .active.tab { display: block }
 }

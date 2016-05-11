@@ -1,16 +1,20 @@
 $(function () {
-  function selectTab(tabElement) {
-    tabElement.show().siblings('.tab').hide();
+  function selectTab(tab, $parent) {
+    $parent.find('[data-tab="' + tab + '"]')
+      .addClass('active')
+      .siblings().removeClass('active');
   }
 
   $('.tabs').each(function () {
     var $parent = $(this);
-    selectTab($parent.find('.tab').first());
+    var firstTab = $parent.find('[data-tab]')
+      .first().attr('data-tab');
+
+    selectTab(firstTab, $parent);
     $parent.find('ul > li').click(function () {
       var $tabHeader = $(this);
       var tab = $tabHeader.attr('data-tab');
-      var tabElement = $parent.find('.tab[data-tab="' + tab + '"]');
-      selectTab(tabElement);
+      selectTab(tab, $parent);
     });
   });
 });

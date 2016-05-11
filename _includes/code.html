@@ -1,26 +1,26 @@
 <div class="tabs">
   <ul class="monospace">
-    {% if ruby %}<li data-tab="ruby">Ruby</li>{% endif %}
-    {% if elixir %}<li data-tab="elixir">Elixir</li>{% endif %}
-    {% if scala %}<li data-tab="scala">Scala</li>{% endif %}
-    {% if javascript %}<li data-tab="javascript">JS</li>{% endif %}
+    {% if ruby %}<li class="ruby" data-tab="ruby">Ruby</li>{% endif %}
+    {% if elixir %}<li class="elixir" data-tab="elixir">Elixir</li>{% endif %}
+    {% if scala %}<li class="scala" data-tab="scala">Scala</li>{% endif %}
+    {% if javascript %}<li class="javascript" data-tab="javascript">JS</li>{% endif %}
   </ul>
-  <div class="tab" data-tab="ruby">
+  <div class="ruby tab" data-tab="ruby">
     {% if ruby %}
       {% highlight ruby %}{{ ruby }}{% endhighlight %}
     {% endif %}
   </div>
-  <div class="tab" data-tab="elixir">
+  <div class="elixir tab" data-tab="elixir">
     {% if elixir %}
       {% highlight elixir %}{{ elixir }}{% endhighlight %}
     {% endif %}
   </div>
-  <div class="tab" data-tab="scala">
+  <div class="scala tab" data-tab="scala">
     {% if scala %}
       {% highlight scala %}{{ scala }}{% endhighlight %}
     {% endif %}
   </div>
-  <div class="tab" data-tab="javascript">
+  <div class="javascript tab" data-tab="javascript">
     {% if javascript %}
       {% highlight javascript %}{{ javascript }}{% endhighlight %}
     {% endif %}
