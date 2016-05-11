@@ -37,19 +37,12 @@ You don't care, because the only thing you have to provide is the comparator fun
 
 Given a list of people like this:
 
-{% capture ruby %}
+{% highlight ruby %}
 list = [
   {name: "Bob", age: 25},
   {name: "Alice", age: 27}
 ]
-{% endcapture %}
-{% capture javascript %}
-var list = [
-  {name: "Bob", age: 25},
-  {name: "Alice", age: 27}
-];
-{% endcapture %}
-{% include code.html %}
+{% endhighlight %}
 
 We can sort it like this:
 
@@ -67,19 +60,12 @@ list.sort(function(p1, p2){
 
 And you get:
 
-{% capture ruby %}
+{% highlight ruby %}
 [
   {name: "Alice", age: 27},
   {name: "Bob", age: 25}
 ]
-{% endcapture %}
-{% capture javascript %}
-[
-  {name: "Alice", age: 27},
-  {name: "Bob", age: 25}
-]
-{% endcapture %}
-{% include code.html %}
+{% endhighlight %}
 
 ## Map
 
@@ -94,13 +80,9 @@ What it does is that it goes through all the elements of the list, applies the g
 
 If we have a list of numbers and a function like this:
 
-{% capture ruby %}
+{% highlight ruby %}
 list = [1, 2, 3, 4, 5]
-{% endcapture %}
-{% capture javascript %}
-var list = [1, 2, 3, 4, 5]
-{% endcapture %}
-{% include code.html %}
+{% endhighlight %}
 
 We can get a list of **squares** of the numbers in the list:
 {% capture ruby %}
@@ -139,13 +121,9 @@ What it does is that it takes each element of the list, applies the function to 
 
 If we take the list from the previous example:
 
-{% capture ruby %}
+{% highlight ruby %}
 list = [5, 2, 3, 4, 1]
-{% endcapture %}
-{% capture javascript %}
-var list = [5, 2, 3, 4, 1]
-{% endcapture %}
-{% include code.html %}
+{% endhighlight %}
 
 When we apply the filter function like so:
 
@@ -179,48 +157,42 @@ The `reduce` function is special, because unlike the other functions described h
 
 - A list of things
 - A function that takes **two** arguments, and returns **one value**
-- The initial value, for example `init`
+- One `initial value` (we will see what this is used for in a second)
 
 The `reduce` function is very useful for things like:
 
 - Summing up the elements of a list
 - Getting the minimum / maximum element of the list
 
-The arguments for the function you pass to `reduce` are:
+#### How It Works
 
-- Accumulator
-- Current element of the list
+- It calls the given function for **every element** in the list.
 
-The `reduce` function takes the **first** element of the list, for example `a`, and calls the given function like this:
+- One argument to the call is the current element of the list.
 
-    result = funct(init, a)
+- The other argument is the result from the previous call.
 
-Than it takes the **second** element of the list, for example `b`, and calls the given function like this:
+- For the very first call we use the `initial value` as the other argument.
 
-    result = funct(result, b)
+- The result of the whole `reduce` function is the result of the last call.
 
 #### For Example:
 
-If we take a list of numbers:
+Let's see how we can use `reduce` to get the sum of elements in a list such as:
 
-    list = [1, 2, 3, 4, 5]
+{% highlight ruby %}
+[1, 2, 3, 4, 5]
+{% endhighlight%}
 
-And a function like so:
+Here is what we do:
 
-    fn(acc, x) = x + acc
+- We pass `0` as the `initial value` to the first call.
 
-We can call the reduce function like so:
+- The function we pass to `reduce` **returns the sum of its arguments**.
 
-    reduce(list, fn, 0)
+Here is a diagram of the whole process:
 
-The calls to the `fn` will look like this:
-
-1. `fn(list, fn, 0)`
-2. `fn(list, fn, 1)`
-3. `fn(list, fn, 3)`
-4. `fn(list, fn, 6)`
-
-Then the initial call to `reduce` will return `6`.
+<center><img src="/images/reduce.png"></center>
 
 ## Take While
 
