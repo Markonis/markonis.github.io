@@ -37,12 +37,25 @@ You don't care, because the only thing you have to provide is the comparator fun
 
 Given a list of people like this:
 
-{% highlight ruby %}
+{% capture ruby %}
 list = [
   {name: "Bob", age: 25},
   {name: "Alice", age: 27}
 ]
-{% endhighlight %}
+{% endcapture %}
+{% capture elixir %}
+list = [
+  [name: "Bob", age: 25],
+  [name: "Alice", age: 27]
+]
+{% endcapture %}
+{% capture javascript %}
+var list = [
+  {name: "Bob", age: 25},
+  {name: "Alice", age: 27}
+]
+{% endcapture %}
+{% include code.html %}
 
 We can sort it like this:
 
@@ -50,6 +63,11 @@ We can sort it like this:
 list.sort do |p1, p2|
   p1.name <=> p2.name
 end
+{% endcapture %}
+{% capture elixir %}
+Enum.sort(list, fn(p1, p2) ->
+  p1[:name] < p2[:name]
+end)
 {% endcapture %}
 {% capture javascript %}
 list.sort(function(p1, p2){
@@ -60,12 +78,25 @@ list.sort(function(p1, p2){
 
 And you get:
 
-{% highlight ruby %}
-[
+{% capture ruby %}
+list = [
   {name: "Alice", age: 27},
   {name: "Bob", age: 25}
 ]
-{% endhighlight %}
+{% endcapture %}
+{% capture elixir %}
+list = [
+  [name: "Alice", age: 27],
+  [name: "Bob", age: 25]
+]
+{% endcapture %}
+{% capture javascript %}
+var list = [
+  {name: "Alice", age: 27},
+  {name: "Bob", age: 25}
+]
+{% endcapture %}
+{% include code.html %}
 
 ## Map
 
@@ -89,6 +120,11 @@ We can get a list of **squares** of the numbers in the list:
 list.map do |num|
   num * num
 end
+{% endcapture %}
+{% capture elixir %}
+Enum.map(list, fn(num) ->
+  num * num
+end)
 {% endcapture %}
 {% capture javascript %}
 list.map(function(num){
@@ -132,6 +168,11 @@ When we apply the filter function like so:
 list.select do |num|
   num < 3
 end
+{% endcapture %}
+{% capture elixir %}
+Enum.filter(list, fn(num) ->
+  num < 3
+end)
 {% endcapture %}
 {% capture javascript %}
 list.filter(function (num) {
@@ -194,6 +235,25 @@ Here is a diagram of the whole process:
 
 <center><img src="/images/reduce.png" style="max-height: 410px;"></center>
 
+Here is the example code:
+
+{% capture ruby %}
+list.reduce(0) do |acc, value|
+  acc + value
+end
+{% endcapture %}
+{% capture elixir %}
+Enum.reduce(list, 0, fn(value, acc) ->
+  acc + value
+end)
+{% endcapture %}
+{% capture javascript %}
+list.reduce(function (acc, value) {
+  return acc + value;
+}, 0);
+{% endcapture %}
+{% include code.html %}
+
 ## Take While
 
 The `take while` function takes **two arguments**:
@@ -209,13 +269,9 @@ It simply starts at the first element of the list, and applies the function to t
 
 Given a list of numbers:
 
-{% capture ruby %}
+{% highlight ruby %}
 list = [5, 3, 2, 4, 1]
-{% endcapture %}
-{% capture javascript %}
-var list = [5, 3, 2, 4, 1]
-{% endcapture %}
-{% include code.html %}
+{% endhighlight %}
 
 When we apply the `take_while` function to this list:
 
@@ -223,6 +279,11 @@ When we apply the `take_while` function to this list:
 list.take_while do |num|
   num * 5 > 13
 end
+{% endcapture %}
+{% capture elixir %}
+Enum.take_while(list, fn(num) ->
+  num * 5 > 13
+end)
 {% endcapture %}
 {% capture javascript %}
 // In JavaScript there is no built-in takeWhile function,
