@@ -11,7 +11,7 @@ email: contact.pavlovic@gmail.com
 description: This is a blog about my coding adventures, and lessons learned. Mostly software design and project management with a dash of humor.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://markonis.github.io" # the base hostname & protocol for your site
-twitter_username: InspiringMarko
+twitter_username: TwitPavlovic
 github_username:  Markonis
 
 # Build settings
