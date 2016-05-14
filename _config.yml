@@ -13,6 +13,7 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://markonis.github.io" # the base hostname & protocol for your site
 twitter_username: TwitPavlovic
 github_username:  Markonis
+snapchat_username: Snap.Pavlovic
 
 # Build settings
 markdown: kramdown
