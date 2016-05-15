@@ -4,9 +4,7 @@ title:  Functional Programmer's Toolbox
 categories: functional programming
 ---
 
-Hey guys, in the [previous blog post]({% post_url 2016-04-16-intro-to-functional-programming %}) we talked about higher order functions and why they are cool. Now let's take a look at the cool ways we can make use of them to write clean and concise code.
-
-There is only a small number of basic higher order functions, from which all others can be easily created. Some of the most important are those that operate on lists of elements:
+Obviously, the tools used in [functional programming]({% post_url 2016-04-16-intro-to-functional-programming %}) **must be functions.** There are many of them I like, but I find that there are a few of them which I use every single day:
 
 - [sort](#sort)
 - [map](#map)
@@ -14,7 +12,8 @@ There is only a small number of basic higher order functions, from which all oth
 - [reduce](#reduce)
 - [take while](#take-while)
 
-Let's go through them one by one and see why they are so incredibly useful.
+There is a reason for that, and it is because one can argue that **almost all other higher order functions can be build by composing these together.**
+
 
 ## Sort
 
