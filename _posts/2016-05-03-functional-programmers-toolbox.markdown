@@ -308,5 +308,3 @@ The `take while` function is very useful when we are dealing with sorted lists, 
 - Once a higher order function is written and tested, it **can be reused many times**, without any changes, because it is by nature **generic**.
 
 - The higher order functions we discussed are **implemented in the standard library** of most programming languages, and the principles of how they work are always the same.
-
-<center><img src="/images/good-job.jpg" style="height: 300px;"></center>
