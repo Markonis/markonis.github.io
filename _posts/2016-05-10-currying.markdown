@@ -1,0 +1,98 @@
+---
+layout: post
+title:  Currying - Spice Things Up
+categories: functional programming
+---
+
+> What is currying and is it really **hot**?
+
+From Wikipedia:
+
+*Curry (/ˈkʌri/, plural curries) is a dish originating in the cuisine of the Indian Subcontinent. The common feature is the use of complex combinations of spices or herbs, usually including fresh or dried hot chillies.*
+
+There are very few things I like more than spices, herbs and fresh chillies, but that is not the reason I am writing this post. Lately, what has me really fired up is [functional programming]({% post_url 2016-04-16-intro-to-functional-programming %}) - to that extent that I'm sometimes forgetting my lunch because of it.
+
+One thing that has been bouncing around in my head is the simple fact that:
+
+**The same way a function can return any value such as [42][42]{:target="_blank"}, it can also return another function as the result.**
+
+> Awesome! Wait, how is this useful?
+
+In functional programming it is all about composing simple functions together to do one complex task, but **currying is actually about decomposing**... Let's see how this is the case with currying.
+
+## What is Currying?
+
+A technique named after [Haskell Curry](https://en.wikipedia.org/wiki/Haskell_Curry){:target="_blank"}, allows us to partially apply a function.
+
+> What does this mean?
+
+**If we have a function that takes three arguments, we can call it with only one or two arguments, and still get a result back.**
+
+> Ok, but what does it return?
+
+It will return yet **another function**! We can then call this function with the rest of arguments to finish the job, and get the actual result back.
+
+## For Example
+
+Let's say that we are building a spell checker. We need a function that takes a list of some words and returns the list of **misspelled words**.
+
+The input to this function would also be some kind of dictionary, but we will not go into details with how the dictionary works.
+
+### Naive Solution
+
+We can build **one function** that takes both the dictionary, and the list of words, as the arguments, and returns the list misspelled of words.
+
+> Why is this naive?
+
+There are a number of problems with this approach. For example:
+
+- It is **too complex** - it does too many things, which makes it harder to reason about, and harder to code up. This kind of code almost always requires extensive comments, which I consider a **code smell**.
+  - It first does the spell checking
+  - Then it [filters]({% post_url 2016-05-03-functional-programmers-toolbox %}#filter) the list of words to isolate the misspelled ones.
+- It is **way too specific** - it can do only one thing and I can't really think of how we could possibly reuse any of its parts, which is a shame, because it has a lot of goodness built in.
+- In order to test this, we need both the dictionary and a list of words, and **that is just too much for a simple unit test**.
+
+### Improved Solution
+
+As we said above, **this function does 2 things**. The first one being the actual spell checking and the second one being the filtering of the words. So let's try to split it down the middle, and see what we get!
+
+Right off the bat, we find that the `filter` function is already built in into the language, because it is one of the basic [higher order functions]({% post_url 2016-05-03-functional-programmers-toolbox %}). **No need to implement or test it. Score!**
+
+Now let's see about the other part - the spelling checker. We need a function that will take **one word and a dictionary**, and return `true` or `false`.
+
+Great, now all we have to do is figure out how we can combine the `filter` function with the `spell_check` function.
+
+But we have a problem here. The `filter` function requires a function which takes **only one argument**. But our `spell_check` function takes **two**.
+
+> We can use currying!
+
+If we partially apply the `spell_check` function with only one argument - the dictionary, we will get back **another function** which takes only one argument - the word. Here is an example:
+
+{% highlight javascript %}
+function spell_check(dictionary) {
+  return function(word) {
+    return !_.contains(dictionary, word);
+  };
+}
+
+var english_check = spell_check(english);
+{% endhighlight %}
+
+Nice, we can then use this new `english_check` function, and pass it to the `filter` function to get the words that are misspelled.
+
+{% highlight javascript %}
+var misspelled = _.filter(article, english_check);
+{% endhighlight %}
+
+In this example we used the [underscore.js](http://underscorejs.org/#filter){:target="_blank"} library.
+
+> This sounds complicated, why is it better?
+
+Great question! In short this solution is better because of two reasons:
+
+- We **reused** the `filter` function from the standard library.
+- Our `spell_check` function is very simple to reason about. It basically checks if the given word is in the dictionary or not. This doesn't require much commenting!
+
+That is all folks, thanks for reading! If you feel like discussing anything related to programming follow me on social media!
+
+[42]: https://en.wikipedia.org/wiki/Phrases_from_The_Hitchhiker%27s_Guide_to_the_Galaxy#Answer_to_the_Ultimate_Question_of_Life.2C_the_Universe.2C_and_Everything_.2842.29
