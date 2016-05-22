@@ -117,7 +117,9 @@ Nice, we can then use this new `english_check` function, and pass it to the `fil
 var misspelled = _.filter(article, english_check);
 {% endcapture %}
 {% capture ruby %}
-misspelled = article.select(english_check)
+misspelled = article.select do |word|
+  english_check.call(word)
+end
 {% endcapture %}
 {% capture elixir %}
 misspelled = article |> Enum.filter(english_check)
