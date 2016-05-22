@@ -58,7 +58,11 @@ As we said above, **this function does 2 things**. The first one being the actua
 
 Right off the bat, we find that the `filter` function is already built in into the language, because it is one of the basic [higher order functions]({% post_url 2016-05-03-functional-programmers-toolbox %}). **No need to implement or test it. Score!**
 
-Now let's see about the other part - the spelling checker. We need a function that will take **one word and a dictionary**, and return `true` or `false`.
+Now let's see about the other part - the spelling checker. This is straightforward - we need a function that will take **one word and a dictionary**, and return `true` or `false`. Something like this:
+
+{% highlight  javascript %}
+function spell_check(dictionary, word) { ... }
+{% endhighlight %}
 
 Great, now all we have to do is figure out how we can combine the `filter` function with the `spell_check` function.
 
