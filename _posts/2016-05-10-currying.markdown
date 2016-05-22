@@ -60,9 +60,16 @@ Right off the bat, we find that the `filter` function is already built in into t
 
 Now let's see about the other part - the spelling checker. This is straightforward - we need a function that will take **one word and a dictionary**, and return `true` or `false`. Something like this:
 
-{% highlight  javascript %}
+{% capture  javascript %}
 function spell_check(dictionary, word) { ... }
-{% endhighlight %}
+{% endcapture %}
+{% capture  ruby %}
+def spell_check(dictionary, word) do ... end
+{% endcapture %}
+{% capture  elixir %}
+def spell_check(dictionary, word) do ... end
+{% endcapture %}
+{% include code.html %}
 
 Great, now all we have to do is figure out how we can combine the `filter` function with the `spell_check` function.
 
@@ -74,7 +81,8 @@ But we have a problem here. The `filter` function requires a function which take
 
 If we partially apply the `spell_check` function with only one argument - the dictionary, we will get back **another function** which takes only one argument - the word. Here is an example:
 
-{% highlight javascript %}
+{% capture javascript %}
+// In this example we used the underscore.js library.
 function spell_check(dictionary) {
   return function(word) {
     return !_.contains(dictionary, word);
@@ -82,15 +90,39 @@ function spell_check(dictionary) {
 }
 
 var english_check = spell_check(english);
-{% endhighlight %}
+{% endcapture %}
+{% capture ruby %}
+def spell_check(dictionary) do
+  lambda do |word|
+    return dictionary.include?(word)
+  end
+end
+
+english_check = spell_check(english)
+{% endcapture %}
+{% capture elixir %}
+def spell_check(dictionary) do
+  fn (word) ->
+    !(dictionary |> Enum.any?(fn(item) -> item == word end))
+  end
+end
+
+english_check = spell_check(english)
+{% endcapture %}
+{% include code.html %}
 
 Nice, we can then use this new `english_check` function, and pass it to the `filter` function to get the words that are misspelled.
 
-{% highlight javascript %}
+{% capture javascript %}
 var misspelled = _.filter(article, english_check);
-{% endhighlight %}
-
-In this example we used the [underscore.js](http://underscorejs.org/#filter){:target="_blank"} library.
+{% endcapture %}
+{% capture ruby %}
+misspelled = article.filter(english_check)
+{% endcapture %}
+{% capture elixir %}
+misspelled = article |> Enum.filter(english_check)
+{% endcapture %}
+{% include code.html %}
 
 > This sounds complicated, why is it better?
 
