@@ -18,7 +18,7 @@ One thing that has been bouncing around in my head is the simple fact that:
 
 > Awesome! Wait, how is this useful?
 
-In functional programming it is all about composing simple functions together to do one complex task, but **currying is actually about decomposing**... Let's see how this is the case with currying.
+In functional programming it is all about composing simple functions together to do one complex task, but **currying is actually about decomposing**... Let's see how this is the case!
 
 ## What is Currying?
 
@@ -64,7 +64,9 @@ Great, now all we have to do is figure out how we can combine the `filter` funct
 
 But we have a problem here. The `filter` function requires a function which takes **only one argument**. But our `spell_check` function takes **two**.
 
-> We can use currying!
+> What now?
+
+**We can use currying to decompose the spell_check function!**
 
 If we partially apply the `spell_check` function with only one argument - the dictionary, we will get back **another function** which takes only one argument - the word. Here is an example:
 
