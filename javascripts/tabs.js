@@ -1,6 +1,6 @@
 $(function () {
   function selectTab(tab, $parent) {
-    $parent.find('[data-tab="' + tab + '"]')
+    $("li." + tab)
       .addClass('active')
       .siblings().removeClass('active');
   }
