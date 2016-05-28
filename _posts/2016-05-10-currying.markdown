@@ -10,21 +10,34 @@ From Wikipedia:
 
 *Curry (/ˈkʌri/, plural curries) is a dish originating in the cuisine of the Indian Subcontinent. The common feature is the use of complex combinations of spices or herbs, usually including fresh or dried hot chillies.*
 
-There are very few things I like more than spices, herbs and fresh chillies, but that is not the reason I am writing this post. Lately, what has me really fired up is [functional programming]({% post_url 2016-04-16-intro-to-functional-programming %}) - to that extent that I'm sometimes forgetting my lunch because of it.
+There are very few things I like more than spices, herbs and fresh chillies, but that is not the reason I am writing this post. Lately, what has me really fired up is [functional programming]({% post_url 2016-04-16-intro-to-functional-programming %}) - to that extent that I'm sometimes forgetting my lunch because of it!
 
-One thing that has been bouncing around in my head is the simple fact that:
+One thing that has been bouncing around in my head lately is the simple fact that:
 
 **The same way a function can return any value such as [42][42]{:target="_blank"}, it can also return another function as the result.**
 
 > Awesome! Wait, how is this useful?
 
-In functional programming it is all about composing simple functions together to do one complex task, but **currying is actually about decomposing**... Let's see how this is the case!
+In functional programming it is all about composing simple functions together to do one complex task. This keeps our code [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself){:target="_blank"} and easy to maintain.
 
-## What is Currying?
+What if we have a complex function that does some heavy processing? Such complicated functions by nature tend to accept multiple parameters, and the interesting thing is that:
 
-A technique named after [Haskell Curry](https://en.wikipedia.org/wiki/Haskell_Curry){:target="_blank"}, allows us to partially apply a function.
+**Often we can often divide the parameter list of such functions into 2 groups:**
 
-> What does this mean?
+1. *Configuration parameters*, for example:
+  - Direction of sorting for a sort function
+  - Dictionary for a spell checker
+2. *Actual data* to be processed
+  - Array to be sorted
+  - Words to be spell checked
+
+Why not take advantage of this fact and try to **decompose** our function into **2 simpler functions**, to make our life a little bit easier?
+
+> Ok, how can we do this?
+
+## Partial Function Application
+
+Even though this sounds complicated, you can think of it as:
 
 **If we have a function that takes three arguments, we can call it with only one or two arguments, and still get a result back.**
 
@@ -32,105 +45,126 @@ A technique named after [Haskell Curry](https://en.wikipedia.org/wiki/Haskell_Cu
 
 It will return yet **another function**! We can then call this function with the rest of arguments to finish the job, and get the actual result back.
 
-## For Example
+We can use this to first pass our *configuration parameters* and get a function back to which we can later pass the *data parameters*, to get the result.
 
-Let's say that we are building a spell checker. We need a function that takes a list of some words and returns the list of **misspelled words**.
+Let's look at a really simple example to illustrate this point in code:
 
-The input to this function would also be some kind of dictionary, but we will not go into details with how the dictionary works.
+{% capture ruby %}
+def greeting(hi, remark)
+  lambda { |person| "#{hi}, #{person}! #{remark}" }
+end
 
-### Naive Solution
+ahoy = greeting("Ahoy", "Weigh anchor...")
+hi   = greeting("Hi", "Let's go...")
 
-We can build **one function** that takes both the dictionary, and the list of words, as the arguments, and returns the list misspelled of words.
-
-> Why is this naive?
-
-There are a number of problems with this approach. For example:
-
-- It is **too complex** - it does too many things, which makes it harder to reason about, and harder to code up. This kind of code almost always requires extensive comments, which I consider a **code smell**.
-  - It first does the spell checking
-  - Then it [filters]({% post_url 2016-05-03-functional-programmers-toolbox %}#filter) the list of words to isolate the misspelled ones.
-- It is **way too specific** - it can do only one thing and I can't really think of how we could possibly reuse any of its parts, which is a shame, because it has a lot of goodness built in.
-- In order to test this, we need both the dictionary and a list of words, and **that is just too much for a simple unit test**.
-
-### Improved Solution
-
-As we said above, **this function does 2 things**. The first one being the actual spell checking and the second one being the filtering of the words. So let's try to split it down the middle, and see what we get!
-
-Right off the bat, we find that the `filter` function is already built in into the language, because it is one of the basic [higher order functions]({% post_url 2016-05-03-functional-programmers-toolbox %}). **No need to implement or test it. Score!**
-
-Now let's see about the other part - the spelling checker. This is straightforward - we need a function that will take **one word and a dictionary**, and return `true` or `false`. Something like this:
-
-{% capture  javascript %}
-function spell_check(dictionary, word) { ... }
+ahoy.call("Joe") # Ahoy, Joe! Weigh anchor...
+hi.call("Joe")   # Hi, Joe! Let's go...
 {% endcapture %}
-{% capture  ruby %}
-def spell_check(dictionary, word) do ... end
+{% capture elixir %}
+def greeting(hi, remark) do
+  fn (person) -> "#{hi}, #{person}! #{remark}" end
+end
+
+ahoy = greeting("Ahoy", "Weigh anchor...")
+hi   = greeting("Hi", "Let's go...")
+
+ahoy.("Joe")  # Ahoy, Joe! Weigh anchor...
+hi.("Joe")    # Hi, Joe! Let's go...
 {% endcapture %}
-{% capture  elixir %}
-def spell_check(dictionary, word) do ... end
-{% endcapture %}
-{% include code.html %}
-
-Great, now all we have to do is figure out how we can combine the `filter` function with the `spell_check` function.
-
-But we have a problem here. The `filter` function requires a function which takes **only one argument**. But our `spell_check` function takes **two**.
-
-> What now?
-
-**We can use currying to decompose the spell_check function!**
-
-If we partially apply the `spell_check` function with only one argument - the dictionary, we will get back **another function** which takes only one argument - the word. Here is an example:
-
 {% capture javascript %}
-// In this example we used the underscore.js library.
-function spell_check(dictionary) {
-  return function(word) {
-    return !_.contains(dictionary, word);
+function greeting(hi, remark) {
+  return function(person) {
+    return hi + ', ' + person + '! ' + remark;
   };
 }
 
-var english_check = spell_check(english);
-{% endcapture %}
-{% capture ruby %}
-def spell_check(dictionary) do
-  lambda do |word|
-    return dictionary.include?(word)
-  end
-end
+var ahoy = greeting("Ahoy", "Weigh anchor...");
+var hi   = greeting("Hi", "Let's go...");
 
-english_check = spell_check(english)
-{% endcapture %}
-{% capture elixir %}
-def spell_check(dictionary) do
-  fn (word) ->
-    !(dictionary |> Enum.any?(fn(item) -> item == word end))
-  end
-end
+ahoy("Joe"); // Ahoy, Joe! Weigh anchor...
+hi("Joe");   // Hi, Joe! Let's go...
 
-english_check = spell_check(english)
+// In JavaScript we can also achieve the same result with:
+function greeting(hi, remark, person) {
+  return hi + ', ' + person + '! ' + remark;
+};
+
+var ahoy = greeting.bind(null, "Ahoy", "Weigh anchor...");
+ahoy("Joe"); // Ahoy, Joe! Weigh anchor...
 {% endcapture %}
 {% include code.html %}
 
-Nice, we can then use this new `english_check` function, and pass it to the `filter` function to get the words that are misspelled.
+As you can see, we first pass in the `hi` and the `remark` parameters to **configure our greeting**. And then we get the customized greeting function which takes only the `person` argument.
 
+This is useful, because now we only need to **pass the *configuration parameters* once**, and then we can **use the function many times on different data.**
+
+## Making It Even More Modular - Currying
+
+We all know that we must DRY our spices well, before we use them. It just happens to also be true for programming and functions.
+
+To achieve maximum flavor, we can create a **chain** of functions where each takes **only one parameter**. Something like this:
+
+{% capture ruby %}
+def greeting(hi)
+  lambda { |remark|
+    lambda { |person| "#{hi}, #{person}! #{remark}" }
+  }
+end
+
+hi = greeting("Hi")
+hi_lets_go = hi.call("Let's go...")
+hi_you_look_nice = hi.call("You look nice...")
+
+hi_lets_go("Joe")       # Hi, Joe! Let's go...
+hi_you_look_nice("Joe") # Hi, Joe! You look nice!
+{% endcapture %}
+{% capture elixir %}
+def greeting(hi) do
+  fn (remark) ->
+    fn (person) -> "#{hi}, #{person}! #{remark}" end
+  end
+end
+
+hi = greeting("Hi")
+hi_lets_go = hi.("Let's go...")
+hi_you_look_nice = hi.("You look nice...")
+
+hi_lets_go("Joe")       # Hi, Joe! Let's go...
+hi_you_look_nice("Joe") # Hi, Joe! You look nice!
+{% endcapture %}
 {% capture javascript %}
-var misspelled = _.filter(article, english_check);
-{% endcapture %}
-{% capture ruby %}
-misspelled = article.select &english_check
-{% endcapture %}
-{% capture elixir %}
-misspelled = article |> Enum.filter(english_check)
+function greeting(hi) {
+  return function(remark) {
+    return function(person) {
+      return hi + ', ' + person + '! ' + remark;
+    };
+  };
+}
+
+var hi = greeting("Hi");
+var hi_lets_go = hi("Let's go...");
+var hi_you_look_nice = hi("You look nice...");
+
+hi_lets_go("Joe");       # Hi, Joe! Let's go...
+hi_you_look_nice("Joe"); # Hi, Joe! You look nice!
 {% endcapture %}
 {% include code.html %}
 
-> This sounds complicated, why is it better?
+This technique is called **function currying**, after [Haskell Curry](https://en.wikipedia.org/wiki/Haskell_Curry){:target="_blank"}.
 
-Great question! In short this solution is better because of two reasons:
+> Why is it better than the previous example?
 
-- We **reused** the `filter` function from the standard library.
-- Our `spell_check` function is very simple to reason about. It basically checks if the given word is in the dictionary or not. This doesn't require much commenting!
+Great question! The first example with *partial application* has one big problem - **it forces us to provide both the first and the second argument at the same time**.
 
-That is all folks, thanks for reading! If you feel like discussing anything related to programming follow me on social media!
+Sometimes we may want to apply the second and the third parameter together, or maybe each one individually. **Function currying** gives us the freedom to do so while having only one implementation of the function.
+
+This has proven to be so useful that many languages, like [Haskell](https://www.haskell.org){:target="_blank"} by default curry all the functions you define.
+
+## Partial Application vs. Currying
+
+Here is a rule of thumb to quickly differentiate the two:
+
+- Partial application predetermines which parameters must be passed together, currying does not.
+- Currying always produces a chain of functions where each one takes only one argument, while partial application can produce functions which take any number of arguments.
 
 [42]: https://en.wikipedia.org/wiki/Phrases_from_The_Hitchhiker%27s_Guide_to_the_Galaxy#Answer_to_the_Ultimate_Question_of_Life.2C_the_Universe.2C_and_Everything_.2842.29
