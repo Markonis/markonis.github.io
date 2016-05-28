@@ -1,5 +1,5 @@
 $(function () {
-  function selectTab(tab, $parent) {
+  function selectTab(tab) {
     $("." + tab + ", " + "[data-tab=" + tab + "]")
       .addClass('active')
       .siblings().removeClass('active');
@@ -10,11 +10,11 @@ $(function () {
     var firstTab = $parent.find('[data-tab]')
       .first().attr('data-tab');
 
-    selectTab(firstTab, $parent);
+    selectTab(firstTab);
     $parent.find('ul > li').click(function () {
       var $tabHeader = $(this);
       var tab = $tabHeader.attr('data-tab');
-      selectTab(tab, $parent);
+      selectTab(tab);
     });
   });
 });
