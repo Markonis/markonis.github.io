@@ -1,6 +1,6 @@
 $(function () {
   function selectTab(tab) {
-    $("." + tab + ", " + "[data-tab=" + tab + "]")
+    $('[data-tab="' + tab + '"]')
       .addClass('active')
       .siblings().removeClass('active');
   }
