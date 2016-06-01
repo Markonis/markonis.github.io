@@ -12,17 +12,19 @@ From Wikipedia:
 
 There are very few things I like more than spices, herbs and fresh chillies, but that is not the reason I am writing this post. Lately, what has me really fired up is [functional programming]({% post_url 2016-04-16-intro-to-functional-programming %}) - to that extent that I'm sometimes forgetting my lunch because of it!
 
-One thing that has been bouncing around in my head lately is the simple fact that:
+One thing that has been bouncing around in my head is the simple fact that:
 
 **The same way a function can return any value such as [42][42]{:target="_blank"}, it can also return another function as the result.**
 
 > Awesome! Wait, how is this useful?
 
-In functional programming it is all about composing simple functions together to do one complex task. This keeps our code [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself){:target="_blank"} and easy to maintain.
+In functional programming it is all about composing simple functions together to do one complex task. This keeps our code [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself){:target="_blank"} and easy to maintain. However, from time to time we all end up writing a really long and complex function, because we have to do some heavy processing or a calculation that just looks like one big monolith.
 
-What if we have a complex function that does some heavy processing? Such complicated functions by nature tend to accept multiple parameters, and the interesting thing is that:
+The ability to return a function as a result of another function allows us to **decompose** these long monolithic functions into smaller, more managable chunks of code. Let's see how!
 
-**Often we can often divide the parameter list of such functions into 2 groups:**
+Such complicated functions by nature tend to accept multiple parameters. But here is an interesting point about that:
+
+**Often we can often divide a long parameter list into 2 groups:**
 
 1. *Configuration parameters*, for example:
   - Direction of sorting for a sort function
@@ -45,7 +47,10 @@ Even though this sounds complicated, you can think of it as:
 
 It will return yet **another function**! We can then call this function with the rest of arguments to finish the job, and get the actual result back.
 
-We can use this to first pass our *configuration parameters* and get a function back to which we can later pass the *data parameters*, to get the result.
+We can use this in the following way:
+
+1. We first pass our *configuration parameters* and get a simpler function back.
+2. Later we pass the *data parameters*, to this new function and we get the final result.
 
 Let's look at a really simple example to illustrate this point in code:
 
@@ -96,7 +101,7 @@ ahoy("Joe"); // Ahoy, Joe! Weigh anchor...
 
 As you can see, we first pass in the `hi` and the `remark` parameters to **configure our greeting**. And then we get the customized greeting function which takes only the `person` argument.
 
-This is useful, because now we only need to **pass the *configuration parameters* once**, and then we can **use the function many times on different data.**
+This is useful, because now we only need to **pass the *configuration parameters* once**, and then we can **use the function many times to greet different people.**
 
 ## Making It Even More Modular - Currying
 
