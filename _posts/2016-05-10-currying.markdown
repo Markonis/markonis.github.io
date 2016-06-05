@@ -6,6 +6,8 @@ categories: functional programming
 
 > What is currying and is it really **hot**?
 
+<iframe width="100%" height="120" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/267632759&amp;color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"></iframe>
+
 From Wikipedia:
 
 *Curry (/ˈkʌri/, plural curries) is a dish originating in the cuisine of the Indian Subcontinent. The common feature is the use of complex combinations of spices or herbs, usually including fresh or dried hot chillies.*
