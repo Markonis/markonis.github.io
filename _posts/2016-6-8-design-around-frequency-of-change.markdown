@@ -2,9 +2,12 @@
 layout: post
 title:  Design Around Frequency of Change
 categories: programming
+audio: true
 ---
 
 > Maintainability is the name of the game in software.
+
+<iframe width="100%" height="120" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/268776177&amp;color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"></iframe>
 
 **The reality of life is that everything changes...**
 
