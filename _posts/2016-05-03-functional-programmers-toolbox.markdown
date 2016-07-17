@@ -69,9 +69,8 @@ Enum.sort(list, fn(p1, p2) ->
 end)
 {% endcapture %}
 {% capture javascript %}
-list.sort(function(p1, p2){
-  return p1.name.localeCompare(p2.name);
-});
+list.sort((p1, p2) => 
+  p1.name.localeCompare(p2.name));
 {% endcapture %}
 {% include code.html %}
 
@@ -126,9 +125,7 @@ Enum.map(list, fn(num) ->
 end)
 {% endcapture %}
 {% capture javascript %}
-list.map(function(num){
-  return num * num;
-});
+list.map(num => num * num)
 {% endcapture %}
 {% include code.html %}
 
@@ -174,9 +171,7 @@ Enum.filter(list, fn(num) ->
 end)
 {% endcapture %}
 {% capture javascript %}
-list.filter(function (num) {
-  return num < 3;
-});
+list.filter(num => num < 3)
 {% endcapture %}
 {% include code.html %}
 
@@ -247,9 +242,7 @@ Enum.reduce(list, 0, fn(value, acc) ->
 end)
 {% endcapture %}
 {% capture javascript %}
-list.reduce(function (acc, value) {
-  return acc + value;
-}, 0);
+list.reduce((acc, value) => acc + value, 0)
 {% endcapture %}
 {% include code.html %}
 
@@ -287,9 +280,7 @@ end)
 {% capture javascript %}
 // In JavaScript there is no built-in takeWhile function,
 // but we can use one from the underscore.js library
-_.takeWhile(list, function(num) {
-  return 5 * num > 13;
-});
+_.takeWhile(list, num => 5 * num > 13);
 {% endcapture %}
 {% include code.html %}
 
